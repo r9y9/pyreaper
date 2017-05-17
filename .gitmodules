@@ -1,0 +1,3 @@
+[submodule "lib/REAPER"]
+	path = lib/REAPER
+	url = https://github.com/google/REAPER
