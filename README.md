@@ -14,3 +14,7 @@ A python wrapper for [REAPER (Robust Epoch And Pitch EstimatoR)](https://github.
 ```bash
 pip install git+https://github.com/r9y9/pyreaper
 ```
+
+## Demonstration notebnook
+
+http://nbviewer.jupyter.org/gist/r9y9/e7d6604757403ec74557ccd93e1f0c8c
