@@ -55,7 +55,7 @@ ext_modules = [Extension(
 
 setup(
     name='pyreaper',
-    version='0.0.1-dev',
+    version='0.0.1',
     description='A python wrapper for REAPER (Robust Epoch And Pitch EstimatoR)',
     author='Ryuichi Yamamoto',
     author_email='zryuichi@gmail.com',
