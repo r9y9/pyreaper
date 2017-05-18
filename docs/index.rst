@@ -1,4 +1,4 @@
-.. pysptk documentation master file, created by
+.. pyreaper documentation master file, created by
    sphinx-quickstart on Fri Sep  4 18:38:55 2015.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
@@ -25,7 +25,7 @@ run:
 
 .. code::
 
-   pip install git+https://github.com/r9y9/pysptk
+   pip install git+https://github.com/r9y9/pyreaper
 
 or:
 
