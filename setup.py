@@ -56,7 +56,7 @@ ext_modules = [Extension(
 setup(
     name='pyreaper',
     version='0.0.1-dev',
-    description='A python wrapper for Speech Signal Processing Toolkit (SPTK)',
+    description='A python wrapper for REAPER (Robust Epoch And Pitch EstimatoR)',
     author='Ryuichi Yamamoto',
     author_email='zryuichi@gmail.com',
     url='https://github.com/r9y9/pyreaper',
