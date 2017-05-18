@@ -73,7 +73,6 @@ setup(
         'develop': ['cython >= ' + min_cython_ver],
     },
     classifiers=[
-        "Operating System :: Microsoft :: Windows",
         "Operating System :: POSIX",
         "Operating System :: Unix",
         "Operating System :: MacOS",
@@ -90,5 +89,5 @@ setup(
         "Intended Audience :: Science/Research",
         "Intended Audience :: Developers",
     ],
-    keywords=["SPTK"]
+    keywords=["REAPER"]
 )
