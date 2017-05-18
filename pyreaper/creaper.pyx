@@ -60,8 +60,8 @@ cdef class EpochTracker:
              float sample_rate, float min_f0_search, float max_f0_search,
              bool do_highpass, bool do_hilbert_transform):
         cdef int32_t n_input = len(input)
-        return self.ptr.Init(& input[0], n_input, sample_rate, min_f0_search,
-                              max_f0_search, do_highpass, do_hilbert_transform)
+        return self.ptr.Init( & input[0], n_input, sample_rate, min_f0_search,
+                             max_f0_search, do_highpass, do_hilbert_transform)
 
     def set_debug_name(self, string name):
         self.ptr.set_debug_name(name)
@@ -97,7 +97,7 @@ cdef class EpochTracker:
 
         cdef int32_t i
         for i in range(0, times.size()):
-            (& pm_track.t(i))[0] = times[i]
+            ( & pm_track.t(i))[0] = times[i]
             pm_track.set_v(i, voicing[i])
 
         return True
@@ -133,82 +133,23 @@ cdef class EpochTracker:
         cdef float t
         for i in range(0, f0.size()):
             t = external_frame_interval * i
-            (& f0_track.t(i))[0] = t
-            (& corr_track.t(i))[0] = t
+            ( & f0_track.t(i))[0] = t
+            ( & corr_track.t(i))[0] = t
             f0_track.set_v(i, True if f0[i] > 0.0 else False)
             corr_track.set_v(i, True if f0[i] > 0.0 else False)
-            ( & f0_track.a(i))[0] = f0[i] if f0[i] > 0.0 else -1.0;
-            ( & corr_track.a(i))[0] = corr[i]
+            (& f0_track.a(i))[0] = f0[i] if f0[i] > 0.0 else -1.0;
+            (& corr_track.a(i))[0] = corr[i]
 
         return True
 
 
-def reaper(np.ndarray[np.int16_t, ndim=1, mode="c"] x, fs,
-           float minf0=40.0,
-           float maxf0=500.0,
-           do_high_pass=True,
-           do_hilbert_transform=False,
-           float inter_pulse=0.01,
-           float frame_period=0.005):
-    """REAPER (Robust Epoch And Pitch EstimatoR)
-
-    Perform REAPER analysis given an audio signal
-
-    Parameters
-    ----------
-    x : np.ndarray, dtype=np.int16
-        Input audio signal
-
-    fs : int
-        Sampling frequency
-
-    minf0 : float
-        Min f0. Default is 40.0.
-
-    maxf0 : float
-        Max f0. Default is 500.0.
-
-    do_high_pass : Bool
-        Enable Rumble-removel highpass filter. Default is True.
-
-    do_hilbert_transform : Bool
-        Enable Hilbert transform that may reduce phase distortion.
-        Default is False.
-
-    inter_pulse : float
-        Regular inter-mark interval to use in UV pitchmark regions.
-        Default is 0.01 (sec)
-
-    frame_period : float
-        Frame period. Default is 0.005 (sec).
-
-    Returns
-    -------
-    pm_times : np.ndarray, dtype=np.float32
-        Pitch mark time series in seconds
-
-    pm : np.ndarray, dtype=np.int32
-        Pitch mark. Value 1 and 0 means voiced frame and unvoiced frame,
-        respectively.
-
-    f0_times : np.ndarray, dtype=np.float32
-        F0 time series in seconds
-
-    f0 : np.ndarray, dtype=np.float32
-        F0 contour
-
-    corr : np.ndarray, dtype=np.float32
-        Correlations
-
-    Examples
-    --------
-    >>> from scipy.io import wavfile
-    >>> import pysptk
-    >>> import reaper
-    >>> fs, x = wavfile.read(pysptk.util.example_audio_file())
-    >>> pm_times, pm, f0_times, f0, corr = pyreaper.reaper(x, fs)
-
-    """
+def reaper_internal(np.ndarray[np.int16_t, ndim=1, mode="c"] x, fs,
+                    float minf0=40.0,
+                    float maxf0=500.0,
+                    bool do_high_pass=True,
+                    bool do_hilbert_transform=False,
+                    float inter_pulse=0.01,
+                    float frame_period=0.005):
     et = EpochTracker()
     ok = et.Init(x, fs, minf0, maxf0, do_high_pass, do_hilbert_transform)
     if not ok:
@@ -227,9 +168,9 @@ def reaper(np.ndarray[np.int16_t, ndim=1, mode="c"] x, fs,
     et.GetEpochTrack(inter_pulse, pm_track.ptr)
 
     cdef int pN = pm_track.num_frames()
-    cdef np.ndarray[np.int32_t, ndim= 1, mode = "c"] pm \
+    cdef np.ndarray[np.int32_t, ndim = 1, mode = "c"] pm \
         = np.zeros(pN, dtype=np.int32)
-    cdef np.ndarray[np.float32_t, ndim = 1, mode = "c"] pm_times \
+    cdef np.ndarray[np.float32_t, ndim= 1, mode = "c"] pm_times \
         = np.zeros(pN, dtype=np.float32)
     et.GetTrackTimes(pm_track.ptr, & pm_times[0])
     et.GetTrackVoicedFlags(pm_track.ptr, & pm[0])
@@ -239,15 +180,15 @@ def reaper(np.ndarray[np.int16_t, ndim=1, mode="c"] x, fs,
     corr_track = Track()
     ok = et.GetF0AndCorrTrack(frame_period, f0_track.ptr, corr_track.ptr)
     if not ok:
-        raise RuntimeError("GetF0AndCorrTrack failed")
+        raise RuntimeError("EpochTracker ResampleAndReturnResults failed")
 
     cdef int fN = f0_track.num_frames()
     assert fN == corr_track.num_frames()
-    cdef np.ndarray[np.float32_t, ndim = 1, mode = "c"] f0 \
+    cdef np.ndarray[np.float32_t, ndim= 1, mode = "c"] f0 \
         = np.zeros(fN, dtype=np.float32)
-    cdef np.ndarray[np.float32_t, ndim = 1, mode = "c"] corr \
+    cdef np.ndarray[np.float32_t, ndim= 1, mode = "c"] corr \
         = np.zeros(fN, dtype=np.float32)
-    cdef np.ndarray[np.float32_t, ndim = 1, mode = "c"] f0_times\
+    cdef np.ndarray[np.float32_t, ndim= 1, mode = "c"] f0_times\
         = np.zeros(fN, dtype=np.float32)
     et.GetTrackTimes(f0_track.ptr, & f0_times[0])
     et.GetTrackValues(f0_track.ptr, & f0[0])
