@@ -33,7 +33,7 @@ or:
 
    git clone https://github.com/r9y9/pyreaper
    cd pyreaper
-   git submodule --init --recursive
+   git submodule update --init --recursive
    python setup.py develop # or install
 
 This should resolve the package dependencies and install ``pyreaper`` property.
