@@ -6,7 +6,7 @@
 [![Documentation Status](https://readthedocs.org/projects/pyreaper/badge/?version=latest)](http://pyreaper.readthedocs.io/en/latest/?badge=latest)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE.md)
 
-A python wrapper for [REAPER (Robust Epoch And Pitch EstimatoR)](https://github.com/google/REAPER>)
+A python wrapper for [REAPER (Robust Epoch And Pitch EstimatoR)](https://github.com/google/REAPER)
 
 ## Installation
 
