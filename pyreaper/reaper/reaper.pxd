@@ -48,3 +48,6 @@ cdef extern from "epoch_tracker/epoch_tracker.h":
         void set_unvoiced_pulse_interval(float v)
         void set_min_f0_search(float v)
         void set_max_f0_search(float v)
+        void set_unvoiced_cost(float v)
+
+        void CleanUp()

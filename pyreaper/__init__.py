@@ -18,7 +18,7 @@ from pyreaper.creaper import reaper_internal
 
 def reaper(x, fs, minf0=40.0, maxf0=500.0, do_high_pass=True,
            do_hilbert_transform=False, inter_pulse=0.01,
-           frame_period=0.005):
+           frame_period=0.005, unvoiced_cost=0.9):
     """REAPER (Robust Epoch And Pitch EstimatoR)
 
     Perform REAPER analysis given an audio signal
@@ -50,6 +50,10 @@ def reaper(x, fs, minf0=40.0, maxf0=500.0, do_high_pass=True,
 
     frame_period : float
         Frame period. Default is 0.005 (sec).
+
+    unvoiced_cost : float
+        Set the cost for unvoiced segments. Default is 0.9, the higher the value
+        the more f0 estimates in noise.
 
     Returns
     -------
@@ -87,4 +91,5 @@ def reaper(x, fs, minf0=40.0, maxf0=500.0, do_high_pass=True,
 
     """
     return reaper_internal(x, fs, minf0, maxf0, do_high_pass,
-                           do_hilbert_transform, inter_pulse, frame_period)
+                           do_hilbert_transform, inter_pulse, frame_period,
+                           unvoiced_cost)

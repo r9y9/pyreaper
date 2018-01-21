@@ -63,6 +63,9 @@ cdef class EpochTracker:
         return self.ptr.Init( & input[0], n_input, sample_rate, min_f0_search,
                              max_f0_search, do_highpass, do_hilbert_transform)
 
+    def CleanUp(self):
+        self.ptr.CleanUp()
+
     def set_debug_name(self, string name):
         self.ptr.set_debug_name(name)
 
@@ -74,6 +77,9 @@ cdef class EpochTracker:
 
     def TrackEpochs(self):
         return self.ptr.TrackEpochs()
+
+    def set_unvoiced_cost(self, float v):
+        self.ptr.set_unvoiced_cost(v)
 
     cdef ResampleAndReturnResults(self, float resample_interval,
                                   vector[float] * f0,
@@ -149,8 +155,10 @@ def reaper_internal(np.ndarray[np.int16_t, ndim=1, mode="c"] x, fs,
                     bool do_high_pass=True,
                     bool do_hilbert_transform=False,
                     float inter_pulse=0.01,
-                    float frame_period=0.005):
+                    float frame_period=0.005,
+                    float unvoiced_cost=0.9):
     et = EpochTracker()
+    et.set_unvoiced_cost(unvoiced_cost)
     ok = et.Init(x, fs, minf0, maxf0, do_high_pass, do_hilbert_transform)
     if not ok:
         raise RuntimeError("EpochTracker init failed")
@@ -193,5 +201,7 @@ def reaper_internal(np.ndarray[np.int16_t, ndim=1, mode="c"] x, fs,
     et.GetTrackTimes(f0_track.ptr, & f0_times[0])
     et.GetTrackValues(f0_track.ptr, & f0[0])
     et.GetTrackValues(corr_track.ptr, & corr[0])
+
+    et.CleanUp()
 
     return pm_times, pm, f0_times, f0, corr
