@@ -53,10 +53,15 @@ ext_modules = [Extension(
     language="c++",
 )]
 
+with open('README.md', 'r') as fd:
+    long_description = fd.read()
+
 setup(
     name='pyreaper',
-    version='0.0.4-dev',
+    version='0.0.4',
     description='A python wrapper for REAPER (Robust Epoch And Pitch EstimatoR)',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     author='Ryuichi Yamamoto',
     author_email='zryuichi@gmail.com',
     url='https://github.com/r9y9/pyreaper',
