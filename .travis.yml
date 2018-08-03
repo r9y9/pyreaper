@@ -38,3 +38,12 @@ script:
 
 after_success:
   - coveralls
+
+deploy:
+  provider: pypi
+  user: $PYPI_USERNAME
+  password:
+    secure: $PYPI_PASSWORD
+  on:
+    tag: true
+    python: "3.6"
