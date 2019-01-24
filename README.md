@@ -5,6 +5,7 @@
 [![Coverage Status](https://coveralls.io/repos/r9y9/pyreaper/badge.svg?branch=master&service=github)](https://coveralls.io/github/r9y9/pyreaper?branch=master)
 [![Documentation Status](https://readthedocs.org/projects/pyreaper/badge/?version=latest)](http://pyreaper.readthedocs.io/en/latest/?badge=latest)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE.md)
+[![DOI](https://zenodo.org/badge/91592334.svg)](https://zenodo.org/badge/latestdoi/91592334)
 
 A python wrapper for [REAPER (Robust Epoch And Pitch EstimatoR)](https://github.com/google/REAPER)
 
