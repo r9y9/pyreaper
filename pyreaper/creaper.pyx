@@ -17,6 +17,8 @@ from libc.stdint cimport int16_t, int32_t
 
 from reaper cimport reaper as _reaper
 
+ctypedef int32_t * int32_t_ptr
+
 cdef class Track:
     cdef _reaper.Track * ptr
 
@@ -181,7 +183,7 @@ def reaper_internal(np.ndarray[np.int16_t, ndim=1, mode="c"] x, fs,
     cdef np.ndarray[np.float32_t, ndim= 1, mode = "c"] pm_times \
         = np.zeros(pN, dtype=np.float32)
     et.GetTrackTimes(pm_track.ptr, & pm_times[0])
-    et.GetTrackVoicedFlags(pm_track.ptr, & pm[0])
+    et.GetTrackVoicedFlags(pm_track.ptr, reinterpret_cast[int32_t_ptr](& pm[0]))
 
     # Get f0 and correlations
     f0_track = Track()
