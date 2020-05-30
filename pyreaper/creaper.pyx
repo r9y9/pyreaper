@@ -109,7 +109,7 @@ cdef class EpochTracker:
         return True
 
     cdef GetTrackVoicedFlags(self, _reaper.Track * track,
-                             int32_t * voiced_flags):
+                             np.ndarray[np.int32_t, ndim = 1, mode = "c"] voiced_flags):
         cdef int32_t i
         for i in range(0, track.num_frames()):
             voiced_flags[i] = 1 if track.v(i) else 0
@@ -181,7 +181,7 @@ def reaper_internal(np.ndarray[np.int16_t, ndim=1, mode="c"] x, fs,
     cdef np.ndarray[np.float32_t, ndim= 1, mode = "c"] pm_times \
         = np.zeros(pN, dtype=np.float32)
     et.GetTrackTimes(pm_track.ptr, & pm_times[0])
-    et.GetTrackVoicedFlags(pm_track.ptr, & pm[0])
+    et.GetTrackVoicedFlags(pm_track.ptr, pm)
 
     # Get f0 and correlations
     f0_track = Track()
