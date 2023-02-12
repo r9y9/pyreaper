@@ -54,4 +54,5 @@ jobs:
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-        run: python -m twine upload dist/*
+        # NOTE: for now upload sdist only to prevent errors like unsupported platform tag 'linux_x86_64'.
+        run: python -m twine upload dist/*.tar.gz
