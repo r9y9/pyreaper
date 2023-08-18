@@ -15,7 +15,7 @@ from libcpp.vector cimport vector
 from libcpp.cast cimport reinterpret_cast
 from libc.stdint cimport int16_t, int32_t
 
-from reaper cimport reaper as _reaper
+from .reaper cimport reaper as _reaper
 
 cdef class Track:
     cdef _reaper.Track * ptr
