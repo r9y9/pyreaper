@@ -58,7 +58,7 @@ with open('README.md', 'r') as fd:
 
 setup(
     name='pyreaper',
-    version='0.0.10',
+    version='0.0.11-dev',
     description='A python wrapper for REAPER (Robust Epoch And Pitch EstimatoR)',
     long_description=long_description,
     long_description_content_type='text/markdown',
