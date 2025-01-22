@@ -1,6 +1,7 @@
 # pyreaper
 
 [![PyPI](https://img.shields.io/pypi/v/pyreaper.svg)](https://pypi.python.org/pypi/pyreaper)
+[![ci](https://github.com/r9y9/pyreaper/actions/workflows/ci.yml/badge.svg)](https://github.com/r9y9/pyreaper/actions/workflows/ci.yml)
 [![Coverage Status](https://coveralls.io/repos/r9y9/pyreaper/badge.svg?branch=master&service=github)](https://coveralls.io/github/r9y9/pyreaper?branch=master)
 [![Documentation Status](https://readthedocs.org/projects/pyreaper/badge/?version=latest)](http://pyreaper.readthedocs.io/en/latest/?badge=latest)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE.md)
