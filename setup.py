@@ -1,15 +1,10 @@
-# coding: utf-8
-
-from __future__ import with_statement, print_function, absolute_import
-
-from setuptools import setup, find_packages, Extension
-from distutils.version import LooseVersion
-
-import numpy as np
 import os
+from distutils.version import LooseVersion
 from glob import glob
 from os.path import join
 
+import numpy as np
+from setuptools import Extension, find_packages, setup
 
 min_cython_ver = '0.21.0'
 try:
@@ -58,7 +53,7 @@ with open('README.md', 'r') as fd:
 
 setup(
     name='pyreaper',
-    version='0.0.11-dev',
+    version='0.0.11',
     description='A python wrapper for REAPER (Robust Epoch And Pitch EstimatoR)',
     long_description=long_description,
     long_description_content_type='text/markdown',
